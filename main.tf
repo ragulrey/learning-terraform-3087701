@@ -69,14 +69,17 @@ module "blog_alb" {
           port = 80
         }
       ]
-      }
+    }
   ]
 
   listeners = [
     {
       port = 80
       protocol = "HTTP"
-      target_group_index = 0
+      default_action = {
+        type             = "forward"
+        target_group_arn = module.blog_alb.target_group_arns[0]
+      }
     }
   ]
 
